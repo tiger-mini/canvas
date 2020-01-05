@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title>clear react</title>
+		<style>
+			canvas{
+				background-color: red
+			}
+		</style>
+	</head>
+	<body>
+		
+		<canvas width="300" height="300" id="canvas"></canvas>
+		<script>
+			window.onload=function() {
+				console.log('sss')
+ 				var canvas = document.getElementById('canvas')
+ 				var ctx = canvas.getContext('2d')
+
+ 				// 绘制 矩形
+ 				ctx.fillRect(10, 10, 100, 200);
+
+ 				// 清除 一个矩形的小方块 
+ 				ctx.clearRect(30, 30 ,10, 10)
+
+			}
+		</script>
+	</body>
+</html>

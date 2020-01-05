@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title></title>
+		<style>
+			canvas{
+				background-color: red
+			}
+		</style>
+	</head>
+	<body>
+		
+		<canvas width="300" height="300" id="canvas"></canvas>
+		<script>
+			window.onload=function() {
+				console.log('sss')
+ 				var canvas = document.getElementById('canvas')
+ 				var ctx = canvas.getContext('2d')
+
+ 				// 绘制 矩形
+ 				// 方法1
+ 				ctx.fillRect(10, 10, 100, 200);
+
+ 				//方法2
+ 				ctx.strokeRect(150, 150, 100, 100);
+ 			    
+
+			}
+		</script>
+	</body>
+</html>
