@@ -2,23 +2,40 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>Chart </title>
 	<style>
 		*{
 			margin: 0;
 			padding: 0;
 		}
-		canvas{
-			border: 1px solid black;
-		}
+
+		 canvas {
+	      border: 1px solid #eee;
+	      position: relative;
+	     /* left: 50%;
+	      top: 50%;
+	      transform: translate(-50%, -50%);*/
+	      background: -webkit-linear-gradient(top, #0e83f5 0%, #21bdf6 100%);
+	      background: -ms-linear-gradient(top, #0e83f5 0%, #21bdf6 100%);
+	      background: -moz-linear-gradient(top, #0e83f5 0%, #21bdf6 100%);
+	      background: linear-gradient(top, #0e83f5 0%, #21bdf6 100%);
+	    }
 	</style>
+
 </head>
 <body>
-	<canvas width="800" height="400" id="barChart"></canvas>
-	<br />
-	<canvas width="400" height="400" id="mychart"></canvas>
-	<script src="../chart/components/radar.js"></script>
 
-	<script src="../chart/components/bar.js"></script>
+	<canvas id="canvas" width="400" height="736" data-score='724'></canvas>
+	<script src="../chart/components/gauge.js"></script>
+
+	<!-- <canvas height="300" id="barChart"></canvas>
+	<script src="../chart/components/bar.js"></script> -->
+	<br />
+	<!-- <canvas width="400" height="400" id="mychart" style="display: none;"></canvas>
+	<script src="../chart/components/radar.js"></script> -->
+
+	<!-- <div id="container"></div>
+	<script src="../chart/components/base.js"></script> -->
 </body>
 </html>

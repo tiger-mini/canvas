@@ -1,5 +1,3 @@
-
-
 /*
 * Chart 图表
 * 柱状图
@@ -11,8 +9,6 @@
 * 5、鼠标事件处理 
 *
 */
-
-
 
 function goBarChart(dataArr){
     // 声明所需变量
@@ -34,13 +30,14 @@ function goBarChart(dataArr){
     canvas = document.getElementById("barChart");
     if(canvas && canvas.getContext){
         ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
     }
     initChart(); // 图表初始化
     drawLineLabelMarkers(); // 绘制图表轴、标签和标记
     drawBarAnimate(); // 绘制柱状图的动画
     //检测鼠标移动
     var mouseTimer = null;
-    canvas.addEventListener("mousemove",function(e){
+    canvas.addEventListener("click",function(e){
         e = e || window.event;
         if( e.layerX || e.layerX==0 ){
             mousePosition.x = e.layerX;
@@ -60,9 +57,9 @@ function goBarChart(dataArr){
 
     //点击刷新图表
     canvas.onclick = function(){
-        initChart(); // 图表初始化
-        drawLineLabelMarkers(); // 绘制图表轴、标签和标记
-        drawBarAnimate(); // 绘制折线图的动画
+        //initChart(); // 图表初始化
+        //drawLineLabelMarkers(); // 绘制图表轴、标签和标记
+        //drawBarAnimate(); // 绘制折线图的动画
     };
 
 
@@ -92,7 +89,7 @@ function goBarChart(dataArr){
         // 运动相关
         ctr = 1;
         numctr = 100;
-        speed = 10;
+        speed = 16;
 
         //柱状图渐变色
         gradient = ctx.createLinearGradient(0, 0, 0, 300);
