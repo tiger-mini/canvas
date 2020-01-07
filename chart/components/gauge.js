@@ -1,4 +1,14 @@
 window.onload = function () {
+  var getPixelRatio = function (context) {
+        var backingStore = context.backingStorePixelRatio ||
+            context.webkitBackingStorePixelRatio ||
+            context.mozBackingStorePixelRatio ||
+            context.msBackingStorePixelRatio ||
+            context.oBackingStorePixelRatio ||
+            context.backingStorePixelRatio || 1;
+        return (window.devicePixelRatio || 1) / backingStore;
+    };
+
   var canvas = document.getElementById('canvas'),
       ctx = canvas.getContext('2d'),
       cWidth = canvas.width,
@@ -8,6 +18,12 @@ window.onload = function () {
       radius = 150,
       deg0 = Math.PI / 9,
       deg1 = Math.PI * 11 / 45;
+
+  var ratio = getPixelRatio(ctx);
+  canvas.width = canvas.width * ratio;
+  canvas.height = canvas.height * ratio;
+  // 放大倍数
+  ctx.scale(ratio, ratio);
 
   if (score < 400 || score > 900) {
     alert('信用分数区间：400~900');
@@ -143,6 +159,8 @@ window.onload = function () {
       ctx.restore();
 
     })();
+
+    
   }
 
   function Dot() {
