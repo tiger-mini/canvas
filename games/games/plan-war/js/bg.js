@@ -1,36 +1,42 @@
 (function() {
-    var BG = window.BG = Class.extend({
+    const BG = window.BG = Base.extend({
         init: function() {
+            this._super();
             this.canvas = document.getElementById('bgCanvas');
-            this.w = this.canvas.width;
-            this.h = 852; //图片高度
+            this.resetCanvasSize();
+
             this.y = 0;
             this.x = 0;
+            this.speed = 24;
             this.timer = null;
-
+            this.w = this.canvas.width;
+            this.h = this.canvas.height; //图片高度
+           
             this.ctx = this.canvas.getContext('2d');
             this.imgUrl = './static/img/background.png';
-             
-            var self = this; 
-            var img = new Image();
+            
+            const img = new Image();
             img.src = this.imgUrl;
             img.onload = () => {
-                this.ctx.drawImage(img, self.x, self.y)
-                this.ctx.drawImage(img, self.x, self.h)
+                this.ctx.drawImage(img, this.x, this.y)
+                this.ctx.drawImage(img, this.x, this.h)
             }
             this.img = img;
+        },
+        resetCanvasSize: function() {
+            this.canvas.width = this.sceenW;
+            this.canvas.height = this.sceenH;
         },
         move: function() {
             this.y -= 1;
             if (this.y < -this.h) {
                 this.y = 0
-                // this.stop();
             }
         },
         update: function() {
             this.ctx.clearRect(0, 0, this.w, this.h)
             this.ctx.drawImage(this.img, this.x, this.y)
-            this.ctx.drawImage(this.img, this.x, this.h + this.y)  
+            this.ctx.drawImage(this.img, this.x, this.h + this.y)
         },
         stop: function() {
             if (this.timer) clearInterval(this.timer);
@@ -40,7 +46,7 @@
             this.timer = setInterval(() => {
               this.move();
               this.update();
-            }, 10)
+            }, this.speed)
         }
     });
 })();
