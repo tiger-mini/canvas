@@ -3,6 +3,7 @@
         init: function() {
             this._super();
             this.canvas = document.getElementById('bgCanvas');
+            this.ctx = this.canvas.getContext('2d');
             this.resetCanvasSize();
 
             this.y = 0;
@@ -11,12 +12,9 @@
             this.timer = null;
             this.w = this.canvas.width;
             this.h = this.canvas.height; //图片高度
-           
-            this.ctx = this.canvas.getContext('2d');
-            this.imgUrl = './static/img/background.png';
             
             const img = new Image();
-            img.src = this.imgUrl;
+            img.src = './static/img/background.png';
             img.onload = () => {
                 this.ctx.drawImage(img, this.x, this.y)
                 this.ctx.drawImage(img, this.x, this.h)

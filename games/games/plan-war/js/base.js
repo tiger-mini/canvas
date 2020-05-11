@@ -4,6 +4,9 @@
          this.sceenW = window.screen.width;
          this.sceenH = window.screen.height;
       },
+      resetCanvasSize: function() {
+      
+      },
       move: function() {
       
       },

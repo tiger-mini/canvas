@@ -8,12 +8,16 @@
 	<script type="text/javascript" src="../utils/simpleJavascriptInhert.js"></script>
 	<script type="text/javascript" src="./js/base.js"></script>
 	<script type="text/javascript" src="./js/bg.js"></script>
+	<script type="text/javascript" src="./js/plan.js"></script>
 </head>
 <body>
 	<canvas id="bgCanvas" width="480" height="560"></canvas>
+	<canvas id="planCanvas" width="100" height="124"></canvas>
 	<script type="text/javascript">
 		const bg = new BG()
 		bg.render();
+		const plan = new Plan();
+		plan.render()
 	</script>
 </body>
 </html>
