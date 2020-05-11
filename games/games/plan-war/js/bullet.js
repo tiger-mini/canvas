@@ -21,7 +21,7 @@
       this.canvas = document.getElementById("bulletCanvas");
       this.ctx = this.canvas.getContext("2d");
       //初始化一个数组，用于存放子弹
-      this.bulletsArray = [{ x: this.x, y: this.y, w: this.w, h: this.h }];
+      this.bulletsArray = [{id: +new Date, x: this.x, y: this.y, w: this.w, h: this.h }];
       this.resetCanvasSize();
       
       const img = new Image();
@@ -51,6 +51,7 @@
     },
     addBullet: function () {
        this.bulletsArray.push({
+         id: +new Date,
          x: this.plan.x + Math.ceil((this.plan.w - this.w) / 2),
          y: this.plan.y - 30,
          w: this.w,

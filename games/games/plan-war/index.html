@@ -9,12 +9,15 @@
 	<script type="text/javascript" src="./js/base.js"></script>
 	<script type="text/javascript" src="./js/bg.js"></script>
 	<script type="text/javascript" src="./js/plan.js"></script>
-	<script type="text/javascript" src="./js/bullet.js"></script>
+	<script type="text/javascript" src="./js/bullet.js?v=0005"></script>
+	<script type="text/javascript" src="./js/enemy-plan.js?v=0005"></script>
 </head>
 <body>
 	<canvas id="bgCanvas" width="480" height="560"></canvas>
 	<canvas id="planCanvas" width="480" height="560"></canvas>
 	<canvas id="bulletCanvas" width="480" height="560"></canvas>
+	<canvas id="enemyCanvas" width="480" height="560"></canvas>
+	
 	<script type="text/javascript">
 		const bg = new BG()
 		bg.render();
@@ -22,6 +25,8 @@
 		plan.render();
 		const bullet = new Bullet(plan);
 		bullet.render();
+		const enemyPlan = new EnemyPlan(bullet);
+		enemyPlan.render();
 	</script>
 </body>
 </html>
