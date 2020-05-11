@@ -122,7 +122,10 @@
                 src: resource.src,
                 bulletId: [], //击中该敌机的子弹
                 needBullet: resource.needBullet,
-                isBlast: false, //是否爆炸
+                blastResourcePrefix: resource.blastResourcePrefix,
+                blastStep: resource.blastStep, 
+                blastCurrentSetp: resource.blastCurrentSetp,
+                isBlast: false,
             })
         },
         //敌机被打中爆炸
@@ -133,8 +136,8 @@
                     if (enemy.blastCurrentSetp === -1) {
                         enemy.blastCurrentSetp = 1;
                     }
-                    enemy.src = `${this.blastResourcePrefix}${enemy.blastCurrentSetp}.png`
-                    console.log(enemy.src)
+                    enemy.src = `${enemy.blastResourcePrefix}${enemy.blastCurrentSetp}.png`
+                    enemy.blastCurrentSetp ++;
                 }, 24)
             })
         },
