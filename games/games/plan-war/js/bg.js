@@ -1,4 +1,8 @@
 (function() {
+    /**
+     * 背景类
+     * @type {Class|*|void}
+     */
     const BG = window.BG = Base.extend({
         init: function() {
             this._super();

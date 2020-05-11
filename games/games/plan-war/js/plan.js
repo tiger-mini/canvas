@@ -1,4 +1,8 @@
 ;(function () {
+  /**
+   * 飞机类
+   * @type {Class|*|void}
+   */
   const Plan = window.Plan = Base.extend({
     init: function () {
       this._super();
@@ -60,6 +64,9 @@
     },
     bindKeyboard: function(e) {
        document.addEventListener("keydown", this.move.bind(this, e))
+    },
+    stop: function() {
+      if (this.timer) clearInterval(this.timer);
     },
     render: function () {
       this.timer = setInterval(() => {
