@@ -18,20 +18,30 @@
             this.resetCanvasSize();
 
             //敌机资源信息
-            this.enemyResourcesArray = [{
+            this.enemyResourcesArray = [
+                {
                     src: "./static/img/enemy0.png",
+                    blastResourcePrefix: "./static/img/enemy0_down",
+                    blastStep: 4, //爆炸有4个图片 索引从1开始
+                    blastCurrentSetp: -1, //当前爆炸步骤
                     w: 51,
                     h: 39,
-                    needBullet: 1
+                    needBullet: 1, //打爆该敌机需要的子弹数
                 },
                 {
                     src: "./static/img/enemy1.png",
+                    blastResourcePrefix: "./static/img/enemy1_down",
+                    blastStep: 4, //爆炸有4个图片 索引从1开始
+                    blastCurrentSetp: -1, //当前爆炸步骤
                     w: 69,
                     h: 89,
                     needBullet: 2
                 },
                 {
                     src: "./static/img/enemy2.png",
+                    blastResourcePrefix: "./static/img/enemy2_down",
+                    blastStep: 6, //爆炸有4个图片 索引从1开始
+                    blastCurrentSetp: -1, //当前爆炸步骤
                     w: 165,
                     h: 246,
                     needBullet: 3
@@ -92,6 +102,7 @@
                             const len = enemy.bulletId.length;
                             if (len > 0 && len >= enemy.needBullet) {
                                 enemy.isBlast = true;
+                                this.enemyBlast();
                             }
                         }
                     }
@@ -99,7 +110,7 @@
             });
         },
         //添加敌机
-        addEnemy: function() {
+        enemyAdd: function() {
             const rd = this.getRandomNumber(0, 2);
             const resource = this.enemyResourcesArray[rd];
             const position = this.getRandomPosition(resource);
@@ -112,6 +123,19 @@
                 bulletId: [], //击中该敌机的子弹
                 needBullet: resource.needBullet,
                 isBlast: false, //是否爆炸
+            })
+        },
+        //敌机被打中爆炸
+        enemyBlast: function() {
+            const blastEnemyArr = this.enemysArray.filter(enemy => enemy.isBlast);
+            blastEnemyArr.map(enemy => {
+                setInterval(() => {
+                    if (enemy.blastCurrentSetp === -1) {
+                        enemy.blastCurrentSetp = 1;
+                    }
+                    enemy.src = `${this.blastResourcePrefix}${enemy.blastCurrentSetp}.png`
+                    console.log(enemy.src)
+                }, 24)
             })
         },
         updatePosition: function() {
@@ -134,7 +158,7 @@
         },
         render: function() {
             this.timerForAddEnemy = setInterval(() => {
-                this.addEnemy()
+                this.enemyAdd()
             }, this.speedForAddEnemy);
 
             this.timer = setInterval(() => {
