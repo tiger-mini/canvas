@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="./css/index.css" />
 	<script type="text/javascript" src="../utils/simpleJavascriptInhert.js"></script>
 	<script type="text/javascript" src="./js/base.js"></script>
+	<script type="text/javascript" src="./js/score.js"></script>
 	<script type="text/javascript" src="./js/bg.js"></script>
 	<script type="text/javascript" src="./js/plan.js"></script>
 	<script type="text/javascript" src="./js/bullet.js"></script>
@@ -17,15 +18,18 @@
 	<canvas id="planCanvas" width="480" height="560"></canvas>
 	<canvas id="bulletCanvas" width="480" height="560"></canvas>
 	<canvas id="enemyCanvas" width="480" height="560"></canvas>
+	<canvas id="scoreCanvas" width="480" height="560"></canvas>
 
 	<script type="text/javascript">
 		const bg = new BG()
 		bg.render();
+		const score = new Score();
+		score.render();
 		const plan = new Plan();
 		plan.render();
 		const bullet = new Bullet(plan);
 		bullet.render();
-		const enemyPlan = new EnemyPlan(bullet);
+		const enemyPlan = new EnemyPlan(bullet, score);
 		enemyPlan.render();
 	</script>
 </body>
