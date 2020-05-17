@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chart.js Demo</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <script type="text/javascript" src="./js/utils/simpleJavascriptInherit.js"></script>
+    <script type="text/javascript" src="./js/utils/helper.color.js"></script>
+    <script type="text/javascript" src="./js/utils/helper.align.js"></script>
+    <script type="text/javascript" src="./js/core/core.defaultConfig.js"></script>
+    <script type="text/javascript" src="./js/core/core.animate.js"></script>
+    <script type="text/javascript" src="./js/core/index.js"></script>
+    <script type="text/javascript" src="./js/controller/bar.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="740" height="380">please update you Browser!</canvas>
+    <script type="text/javascript">
+    window.onload = () => {
+        const barChartData = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            dataSet: [
+                {
+                    label: "dataset 1",
+                    backgroundColor: "#000022",
+                    border: {
+                        color: "red",
+                        width: 1,
+                    },
+                    data: [22, 45, 66, 88, 86, 12, 39]
+                }
+            ]
+        };
+        const bar = new window.Bar('myChart', {
+            title: {
+                text: "柱状图"
+            },
+            tooltips: [],
+
+            data: barChartData
+        });
+        bar.render();
+    }
+    </script>
+</body>
+
+</html>
