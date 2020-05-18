@@ -12,26 +12,24 @@
         	const firstXAxis = this.xAxisArr[0];
         	const secondXAxis = this.xAxisArr[1];
 
-        	return Math.floor((secondXAxis - firstXAxis) / dsLen);
+        	this.chartBarWidth = Math.floor((secondXAxis - firstXAxis) / dsLen);
         },
 
         render: function() {
             this.draw();
-            this.chartBarWidth = this._initCharBarWidth();
+            this._initCharBarWidth();
             this.drawSerise()
         },
 
         _drawBar: function(rect) {
-        	let { w, h, x, y } = rect;
-        	x = x + 2;
-        	w = w - 4;
+        	let { w, h, x0, y0, x1, y1, x2, y2, x3, y3 } = rect;
         	this.ctx.beginPath();
-        	this.ctx.moveTo(x, x + h);
-        	this.ctx.lineTo(x, y);
-        	this.ctx.lineTo(x + w, y);
-        	this.ctx.lineTo(x + w, x + h);
-        	this.ctx.closePath();
-        	this.ctx.fillStyle = "rgba(255, 187, 255, 0.9)";
+        	this.ctx.moveTo(x0, y0);
+        	this.ctx.lineTo(x1, y1);
+        	this.ctx.lineTo(x2, y2);
+        	this.ctx.lineTo(x3, y3);
+        	//this.ctx.closePath();
+        	this.ctx.fillStyle = "rgba(255, 177, 193, 1)";
         	this.ctx.fill();
         	//this.ctx.strokeStyle = 'rgba(255, 187, 255, 0.5)';
         	this.ctx.stroke();
@@ -41,11 +39,21 @@
         },
 
         _getRect: function(xValue, yValue) {
+            const x0 = xValue + 2;
+            const y0 = this.maxYAxis;
+            const w = this.chartBarWidth - 4;
+
         	return {
-        		x: xValue + 2,
-        		y: this.maxYAxis - yValue,
-        		h: this.maxYAxis - this.minYAxis,
-        		w: this.chartBarWidth - 4
+        		x0,
+        		y0,
+                x1: x0,
+                y1: y0 - yValue,
+                x2: x0 + w,
+                y2: y0 - yValue,
+                x3: x0 + w,
+                y3: y0,
+        		h:  yValue,
+        		w
         	}
         },
 
@@ -54,16 +62,12 @@
         	const { data: { dataSet } } = this.options;
             if (dataSet) {
             	dataSet.forEach((item, index) => {
-            		console.log('item ----', item)
-            		console.log(this.xAxisArr)
             		item.data.forEach((point, i) => {
-            			const rect = this._getRect(this.xAxisArr[i], point)
+            			const rect = this._getRect(this.xAxisArr[i], point);
             			this._drawBar(rect)
             		});
             	});
             }
-
         }
-
     });
 })();
