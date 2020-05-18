@@ -59,7 +59,7 @@ function goBarChart(dataArr){
     canvas.onclick = function(){
         //initChart(); // 图表初始化
         //drawLineLabelMarkers(); // 绘制图表轴、标签和标记
-        //drawBarAnimate(); // 绘制折线图的动画
+        drawBarAnimate(); // 绘制折线图的动画
     };
 
 

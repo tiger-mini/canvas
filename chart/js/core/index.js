@@ -40,7 +40,8 @@
         	this.ctx.stroke();
         },
 
-        _drawAxis: function() {
+        //绘制x，y轴的轴线
+        _drawAxisLine: function() {
             const { data: { labels } } = this.options;
             const { title: { size }, xAxis: { initX }, yAxis: { initY }, axisColor } = this.barConfig;
             if (labels) {
@@ -59,6 +60,31 @@
             }
         },
 
+        //绘制x轴上的数值
+        _drawXAxisLabel: function() {
+            const { data: { labels } } = this.options;
+
+            const y = this.maxYAxis + 18;
+            const x = this.minYAxis;
+            const arr = this.xAxisArr;
+
+            const ilen = labels.length;
+            const splitWidth = Math.floor(this.canvasWidth / ilen);
+            
+            this.ctx.font = "12px 微软雅黑";
+            //this.ctx.fillStyle = "red";
+            let num = 0;
+            let _x = 0;
+            arr && arr.forEach((num, index) => {
+                num = index * splitWidth;
+                _x = x + num;
+                if (num > 0) {
+                    _x = _x - ((num + "").length * 3)
+                }
+                this.ctx.fillText(index * splitWidth, _x, y);
+            })
+        },
+
         _drawDataSet: function() {
             const { data: { dataSet } } = this.options;
             if (dataSet) {
@@ -70,7 +96,8 @@
 
         draw: function() {
         	this._drawTitle();
-            this._drawAxis();
+            this._drawAxisLine();
+            this._drawXAxisLabel();
             //this._drawDataSet();
         },
 
