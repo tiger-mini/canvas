@@ -16,6 +16,8 @@
 
             this.animate = new Animate({ speed: 10 });
             this.barConfig = DefaultConfig.bar;
+
+            this.toolTip = new Tooltips(this);
 		},
 
         _drawTitle: function() {
