@@ -78,33 +78,26 @@
             const that = this;
             let isLegend = false;
             let box = null;
-            let pos = null
-            this.canvas.addEventListener("mousemove", function(e) {
+            let pos = null;
+            this.canvas.addEventListener("click", function(e) {
                 isLegend = false;
                 box = that.canvas.getBoundingClientRect();
                 pos = {
                     x: e.clientX - box.left,
                     y: e.clientY - box.top
                 };
-                //console.log(`x:${pos.x},y:${pos.y}`)
                 let activeIndex = -1;
                 that.rectArr.forEach((rect, index) => {
-                    //if (activeIndex === -1) {
-
-                        //console.log(rect.y0 < pos.y < rect.y1);
-                        //console.log(rect.x0 < pos.x < rect.x2);
-                        //console.log(HelperUtils.isInRect(pos,rect))
-                        if (rect.y0 < pos.y < rect.y1 && (rect.x0 < pos.x < rect.x2)) {
-                            activeIndex = index;
+                    if (activeIndex === -1) {
+                        if (HelperUtils.isInRect(pos, rect)) {
+                             activeIndex = index;
                         }
-                        // if (HelperUtils.isInRect(pos,rect)) {
-                        //     activeIndex = index;
-                        //     console.log(index);
-                        // }
-                    //}
+                    }
                 });
-                console.log('选中：', activeIndex)
-            })
+                if (activeIndex > -1) {
+                    console.log('选中：', activeIndex)
+                }
+            });
         },
 
         unbindMouse: function() {

@@ -39,16 +39,9 @@
         },
         //判断是否在巨星内
         isInRect: function(checkPoint, rect) {
-            //const pointArr = [];
-            // pointArr.push([rect.x0, rect.y0]);
-            // pointArr.push([rect.x1, rect.y1]);
-            // pointArr.push([rect.x2, rect.y2]);
-            // pointArr.push([rect.x3, rect.y3]);
-            // console.log(pointArr)
-            //return HelperUtils.isInPolygon(checkPoint, pointArr)
             const { x, y } = checkPoint;
             const { x0, y0, x1, y1, x2, y2, x3, y3 } = rect;
-            if (x > x0 && x < x3 && y > y0 && y < y2) {
+            if (x0 < x && x2 > x && y0 > y && y1 < y) {
                 return true
             } else {
                 return false
