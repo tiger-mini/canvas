@@ -6,6 +6,7 @@
             this.chartBarWidth = 0;
             this.rectArr = [];
             this.mousemoveHandler = null;
+            this.lastMouseoverActiveIndex = -1;
         },
 
         _initCharBarWidth: function() {
@@ -58,7 +59,9 @@
                 h: yValue,
                 w,
                 is_active: false,
-                is_toolTip: false
+                is_toolTip: false,
+                dataSet: null,
+                dataPoint: null,
             }
         },
 
@@ -68,6 +71,8 @@
                 dataSet.forEach((item, index) => {
                     item.data.forEach((point, i) => {
                         const rect = this._getRect(this.xAxisArr[i], point);
+                        rect.dataSet = item;
+                        rect.dataPoint = point;
                         this.rectArr.push(rect);
                         this._drawBar(rect)
                     });
@@ -80,29 +85,34 @@
             let isLegend = false;
             let box = null;
             let pos = null;
+            let currentActiveIndex = -1;
             isLegend = false;
             box = that.canvas.getBoundingClientRect();
             pos = {
                 x: e.clientX - box.left,
                 y: e.clientY - box.top
             };
+
             that.rectArr.forEach((rect, index) => {
                 if (HelperUtils.isInRect(pos, rect)) {
                     rect.is_active = true;
-                    //rect.is_toolTip = true;
+                    currentActiveIndex = index;
                 } else {
                     rect.is_active = false;
                     rect.is_toolTip = false;
                 }
             });
-            that.rectArr.forEach((rect, index) => {
-                if (rect.is_active) {
-                    that._drawBar(that.rectArr[index], 'blue');
-                    this.toolTip.render(rect);
-                } else {
-                    that._drawBar(that.rectArr[index]);
-                }
-            });
+            if (that.lastMouseoverActiveIndex !== currentActiveIndex) {
+                that.lastMouseoverActiveIndex = currentActiveIndex;
+                that.rectArr.forEach((rect, index) => {
+                    if (rect.is_active) {
+                        that._drawBar(that.rectArr[index], 'blue');
+                        that.toolTip.render(rect);
+                    } else {
+                        that._drawBar(that.rectArr[index]);
+                    }
+                });
+            }
         },
 
         bindMouse: function() {
