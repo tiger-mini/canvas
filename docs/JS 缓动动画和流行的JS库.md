@@ -20,7 +20,9 @@
    CreateJS https://github.com/CreateJS/TweenJS
 
    Kute https://github.com/thednp/kute.js
-   
+
+   Anime https://github.com/juliangarnier/anime （Star:35.5K）
+
 
 3、各动画的优劣
    
