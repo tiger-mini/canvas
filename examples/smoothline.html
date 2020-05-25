@@ -1,0 +1,98 @@
+<html>
+<head>
+    <title>canvas template</title>
+    <meta name="description" content="canvas">
+    <meta name="keywords" content="HTML,CSS,XML,JavaScript">
+    <meta name="author" content="yangb03">
+    <meta charset="UTF-8">
+    <style>
+        canvas {
+            box-shadow: 0 0 10px #e5e5e5;
+        }
+    </style>
+</head>
+<body>
+<canvas width="800" height="400" id="canvas"></canvas>
+<input type="button" value="reset" onclick="reset()"/>
+
+<script type="text/javascript">
+    let canDraw = false;
+    let pointsArr = [];
+    let beginPoint = null;
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 1;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+
+    canvas.addEventListener('mousedown', down, false);
+    canvas.addEventListener('mousemove', move, false);
+    canvas.addEventListener('mouseup', up, false);
+    canvas.addEventListener('mouseout', up, false);
+
+    function down(evt) {
+        canDraw = true;
+        const { x, y } = getPos(evt);
+        pointsArr.push({ x, y });
+        beginPoint = { x, y };
+    }
+
+    function move(evt) {
+        if (canDraw) {
+
+            const { x, y } = getPos(evt);
+            pointsArr.push({ x, y });
+
+            if (pointsArr.length > 3) {
+                const lastTowPoint = pointsArr.slice(-2);
+                const controlPoint = lastTowPoint[0];
+                const endPoint = {
+                    x: (lastTowPoint[0].x + lastTowPoint[1].x) / 2,
+                    y: (lastTowPoint[0].y + lastTowPoint[1].y) / 2
+                };
+                drawLine(beginPoint, controlPoint, endPoint);
+                beginPoint = endPoint;
+            }
+        }
+    }
+
+    function up(evt) {
+        if (!canDraw) return;
+        const { x, y } = getPos(evt);
+        pointsArr.push({ x, y });
+
+        if (pointsArr.length > 3) {
+            const lastTwoPoints = pointsArr.slice(-2);
+            const controlPoint = lastTwoPoints[0];
+            const endPoint = lastTwoPoints[1];
+            drawLine(beginPoint, controlPoint, endPoint);
+        }
+        beginPoint = null;
+        canDraw = false;
+        pointsArr = [];
+    }
+
+    function getPos(evt) {
+        return {
+            x: evt.clientX,
+            y: evt.clientY
+        };
+    }
+
+    function drawLine(beginPoint, controlPoint, endPoint) {
+        ctx.beginPath();
+        ctx.moveTo(beginPoint.x, beginPoint.y);
+        ctx.quadraticCurveTo(controlPoint.x, controlPoint.y, endPoint.x, endPoint.y);
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    function reset() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+</script>
+</body>
+</html>
