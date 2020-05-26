@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <style>
         .main {
-            padding: 50px;
             text-align: center;
             width: 800px;
             height: 800px;
@@ -204,6 +203,8 @@
       }
     }
   };
+  //
+  let isMove = true;
   // 当前时间
   let start = 0;
   // 初始值，因为一开始球在最左边，因此是0
@@ -222,19 +223,25 @@
     // 时间递增
     start++;
     // 如果还没有运动到位，继续
-    if (start <= during) {
+    if (start <= during && isMove) {
+      console.log('dddd')
       requestAnimationFrame(step);
     } else {
       // 动画结束，这里可以插入回调...
       // callback()...
+      isMove = false;
     }
   };
 
   eleBall.addEventListener("click", function () {
-    if (start >= 100) {
+    if (!isMove) {
+      isMove = true;
       start = 0;
+      eleBall.style.left = "0px";
       eleBall.style.transform = "translateX(0px)";
+      cancelAnimationFrame(step)
     } else {
+      isMove = true;
       step();
     }
   });
