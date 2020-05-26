@@ -211,7 +211,7 @@
   // 容器宽度减去球的宽度
   const changeValue = (800 - 50);
   // 持续时间
-  const during = 100;
+  const during = 60;
   const eleBall = document.getElementById("eleBall");
   // 运动
   const step = function () {
@@ -231,7 +231,12 @@
   };
 
   eleBall.addEventListener("click", function () {
-    step();
+    if (start >= 100) {
+      start = 0;
+      eleBall.style.transform = "translateX(0px)";
+    } else {
+      step();
+    }
   });
 </script>
 
