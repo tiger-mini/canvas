@@ -24,27 +24,146 @@
 
 <body>
     <div class="main">
-        <!--    <canvas id="canvas" width="500" height="400"></canvas>-->
+        <canvas id="canvas" width="800" height="400"></canvas>
         <div id="eleBall"></div>
     </div>
     <script type="text/javascript">
-      function bubble_sort(array) {
-          var i, j, temp;
-          for (i = 0; i < array.length - 1; i++) {
-              for (j = 0; j < array.length - 1 - i; j++) {
-                  if (array[j] > array[j + 1]) {
-                      temp = array[j];
-                      array[j] = array[j + 1];
-                      array[j + 1] = temp;
-                  }
-              }
-          }
-      }
+    // function bubble_sort(array) {
+    //     var i, j, temp;
+    //     for (i = 0; i < array.length - 1; i++) {
+    //         for (j = 0; j < array.length - 1 - i; j++) {
+    //             if (array[j] > array[j + 1]) {
+    //                 temp = array[j];
+    //                 array[j] = array[j + 1];
+    //                 array[j + 1] = temp;
+    //             }
+    //         }
+    //     }
+    // }
 
-      var num = [22, 34, 3, 32, 82, 55, 89, 50, 37, 5, 64, 35, 9, 70, 1];
-      bubble_sort(num);
-      console.log(num)  
+    //var num = [22, 34, 13, 32, 82, 55, 89, 50, 37, 5, 64, 35, 9, 70, 11];
+    //bubble_sort(num);
+    //console.log(num);
 
+    // const canvas = document.getElementById('canvas');
+    // const ctx = canvas.getContext('2d');
+
+    // const barWidth = 10;
+    // const barMargin = 10;
+    // const initX = 50;
+    // const initY = 350;  
+
+    // var i, j, temp;
+    // for (i = 0; i < num.length - 1; i++) {
+    //     for (j = 0; j < num.length - 1 - i; j++) {
+    //         if (num[j] > num[j + 1]) {
+    //             temp = num[j];
+    //             num[j] = num[j + 1];
+    //             num[j + 1] = temp;
+
+    //             ctx.clearRect(0, 0, 1000, 400);
+    //             ctx.beginPath();
+    //             ctx.moveTo(0, 0);
+    //             ctx.lineTo(0, 350);
+    //             ctx.lineTo(800, 350 - 0.5);
+    //             ctx.stroke();
+
+    //             ctx.beginPath();
+    //             ctx.fillStyle = 'blue';
+    //             num.forEach((item, index) => {
+    //               ctx.fillRect(initX + (barWidth) * index + barMargin + 1, initY, barWidth, -item);
+    //             });
+
+    //         }
+    //     }
+    // }
+
+    const WIDTH = 400,
+        HEIGHT = 400;
+    const COLUMN_WIDTH = 15,
+        COLUMN_MARGIN = 1;
+    const LENGTH = ~~(WIDTH / (COLUMN_MARGIN + COLUMN_WIDTH))
+    let animationTime = 1;
+    let sortArray = new Array();
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    init();
+    sort(ctx);
+
+    function sort(ctx) {
+        // let item;
+        // for(let i = 0; i < LENGTH; i++) {
+        //   for(let j = LENGTH - 1; j > i; j--) {
+        //     if (sortArray[j] < sortArray[j - 1]) {
+        //       item = sortArray[j];
+        //       sortArray[j] = sortArray[j - 1]
+        //       sortArray[j - 1] = item; 
+        //     }
+        //   }
+        // }
+        for (let i = 0; i < LENGTH; i++) {
+            let minIndex = i;
+            for (let j = i + 1; j < LENGTH; j++) {
+                if (sortArray[j] < sortArray[minIndex]) {
+                    minIndex = j;
+                }
+                let copyArr = JSON.parse(JSON.stringify(sortArray));
+                //
+                updateView(ctx, copyArr, i, j, minIndex)
+            }
+            swap(i, minIndex);
+            let copyArr = JSON.parse(JSON.stringify(sortArray));
+            updateView(ctx, copyArr, i, -1, -1)
+        }
+    }
+
+
+
+    function updateView(ctx, array, orderIndex, currentCompareIndex, currentMinIndex) {
+        setTimeout(function() {
+            render(ctx, array, orderIndex, currentCompareIndex, currentMinIndex)
+        }, animationTime++ * 10)
+    }
+
+    function init() {
+        for (var i = 0; i < LENGTH; i++) {
+            sortArray[i] = ~~((Math.random() * HEIGHT) + 1);
+        }
+    }
+
+    function swap(i, j) {
+        let item = sortArray[i];
+        sortArray[i] = sortArray[j];
+        sortArray[j] = item
+    }
+
+    function render(cxt, array, orderIndex, currentCompareIndex, currentMinIndex) {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        for (var i = 0; i < LENGTH; i++) {
+            if (i < orderIndex) {
+                drawColumn(ctx, i, array[i], '#FFC000');
+            } else if (i === currentCompareIndex) {
+                drawColumn(ctx, i, array[i], '#002060');
+            } else if (i === currentMinIndex) {
+                drawColumn(ctx, i, array[i], '#7030A0');
+            } else {
+                if (orderIndex === LENGTH - 1) {
+                  drawColumn(ctx, i, array[i], '#FFC000');
+                } else {
+                  drawColumn(ctx, i, array[i], '#00B050');
+                }
+            }
+
+        }
+    }
+
+    function drawColumn(ctx, index, height, color) {
+        const x = (COLUMN_WIDTH + COLUMN_MARGIN) * index;
+        const y = HEIGHT;
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, COLUMN_WIDTH, -height);
+    }
     </script>
     <!-- <script>
 
