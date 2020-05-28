@@ -14,7 +14,7 @@
             this.minYAxis = 0;
             this.maxYAxis = 0;
 
-            this.animate = new Animate({ speed: 10 });
+            this.animate = Animate;
             this.barConfig = DefaultConfig.bar;
 
             this.toolTip = new Tooltips(this);
