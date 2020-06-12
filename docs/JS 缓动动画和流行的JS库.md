@@ -30,6 +30,17 @@
 4、动画库的解读
 
 
+canvas [高级动画](https://developer.mozilla.org/zh-CN/docs/Web/Guide/HTML/Canvas_tutorial/Advanced_animations
+)
+
+
+canvas [像素操作](https://developer.mozilla.org/zh-CN/docs/Web/Guide/HTML/Canvas_tutorial/Pixel_manipulation_with_canvas)
+
+
+canvas [优化](https://developer.mozilla.org/zh-CN/docs/Web/Guide/HTML/Canvas_tutorial/Optimizing_canvas)    
+
+
+
 
 
 
