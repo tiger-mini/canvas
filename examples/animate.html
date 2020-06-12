@@ -51,7 +51,7 @@
     // const barWidth = 10;
     // const barMargin = 10;
     // const initX = 50;
-    // const initY = 350;  
+    // const initY = 350;
 
     // var i, j, temp;
     // for (i = 0; i < num.length - 1; i++) {
@@ -98,7 +98,7 @@
         //     if (sortArray[j] < sortArray[j - 1]) {
         //       item = sortArray[j];
         //       sortArray[j] = sortArray[j - 1]
-        //       sortArray[j - 1] = item; 
+        //       sortArray[j - 1] = item;
         //     }
         //   }
         // }
@@ -118,8 +118,6 @@
         }
     }
 
-
-
     function updateView(ctx, array, orderIndex, currentCompareIndex, currentMinIndex) {
         setTimeout(function() {
             render(ctx, array, orderIndex, currentCompareIndex, currentMinIndex)
@@ -131,13 +129,11 @@
             sortArray[i] = ~~((Math.random() * HEIGHT) + 1);
         }
     }
-
     function swap(i, j) {
         let item = sortArray[i];
         sortArray[i] = sortArray[j];
         sortArray[j] = item
     }
-
     function render(cxt, array, orderIndex, currentCompareIndex, currentMinIndex) {
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         for (var i = 0; i < LENGTH; i++) {
@@ -157,7 +153,6 @@
 
         }
     }
-
     function drawColumn(ctx, index, height, color) {
         const x = (COLUMN_WIDTH + COLUMN_MARGIN) * index;
         const y = HEIGHT;
