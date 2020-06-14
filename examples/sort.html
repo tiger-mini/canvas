@@ -14,6 +14,7 @@
                 height: 50px;
                 background-color: red;
                 border-radius: 50px;
+                display: none;
             }
             canvas{
               box-shadow: 0 0 10px #e5e5e5;
@@ -132,7 +133,6 @@
               ctx.stroke();
             }
             function animateRect() {
-              console.log('cc');
               const t = Date.now();
               if(t >= startDate + duration) {
                   return ;
