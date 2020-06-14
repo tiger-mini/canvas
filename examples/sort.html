@@ -14,10 +14,9 @@
                 height: 50px;
                 background-color: red;
                 border-radius: 50px;
-                display: none;
             }
             canvas{
-              box-shadow: 0 0 10px #e5e5e5;
+              /*box-shadow: 0 0 10px #e5e5e5;*/
             }
         </style>
     </head>
@@ -112,7 +111,7 @@
             var div = document.getElementById('ball');
             var animate = new Animate(div);
 
-            //animate.start('left', 500, 1000,'easeOut');
+            animate.start('left', 500, 1000,'easeOut');
 
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
@@ -142,7 +141,7 @@
               drawRect();
               window.requestAnimationFrame(animateRect)
             }
-            animateRect();
+            //animateRect();
           }
        </script>
     </body>

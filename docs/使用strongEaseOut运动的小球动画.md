@@ -113,6 +113,10 @@ window.onload = function() {
 
 
 
+示意图
+
+![](https://upload-images.jianshu.io/upload_images/9722449-ee8f89972e6e82c5.gif?imageMogr2/auto-orient/strip)
+
 
 
 
