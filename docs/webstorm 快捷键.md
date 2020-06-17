@@ -6,7 +6,7 @@ Alt + Shift + K   push
 
 Alt + A  Annotate
 Alt + C  Compare with the same repository version
-
+Alt + S  Show History
 Alt + Z  Open in terminal
 
 //企业微信的截图
