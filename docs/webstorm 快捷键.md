@@ -14,5 +14,11 @@ Alt + Z  Open in terminal
 Alt + N New File
 
 
+Tool Window
+Alt + 1      Project
+Alt + 2      Find
+Alt + Home   Show Navigate Bar
+
+
 //企业微信的截图
 Alt+Shift+A
