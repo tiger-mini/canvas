@@ -19,11 +19,10 @@ Tool Window
 Alt + 1      Project
 Alt + 2      Find
 Alt + Home   Show Navigate Bar
-
+F11          toggle full screen mode
 
 Navigate
 Ctrl + L     Go To Line/Column  
-
 
 //企业微信的截图
 Alt+Shift+A
