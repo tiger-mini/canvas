@@ -12,8 +12,10 @@ Alt + Z  Open in terminal
 
 //--- File
 Alt + N            New File
+Alt + X			   Show Line Number	
 Ctrl + Alt + C     Collapse All
 Ctrl + Alt + 1     Expand All
+
 
 Tool Window
 Alt + 1      Project

@@ -1,0 +1,198 @@
+<html>
+    <head>
+       <title>canvas template</title>
+       <meta name="description" content="canvas">
+       <meta name="keywords" content="HTML,CSS,XML,JavaScript">
+       <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+       <meta name="author" content="yangb03">
+       <meta charset="UTF-8">
+        <style>
+            body{
+                margin: 0;
+                padding: 0;
+            }
+            canvas{ box-shadow: 0 0 10px #888888;}
+        </style>
+    </head>
+    <body>
+<!--       <canvas width="800" height="400" id="canvas">你的浏览器暂不支持canvas，请升级浏览器</canvas>-->
+       <div id="chart" height="400" width="600"></div>
+       <script type="text/javascript">
+          window.onload = function() {
+              function drawBase(cBox, dataArr, textArr, ifFill) {
+                   let canvas, ctx;
+                   let cWidth,
+                     cHeight,
+                     cMargin,
+                     cSpace,
+                     textPadding;
+                   let originX, originY;
+
+                   let totalNumber, maxValue;
+                   let colorArr;
+
+                   let ctr, number, speed;
+                   let mousePosition = {};
+
+                   canvas = document.createElement('canvas');
+                   if (canvas && canvas.getContext) {
+                     ctx = canvas.getContext('2d');
+                   }
+
+                   canvas.innerHtml = '你的浏览器不支持HTML5 canvas';
+                   cBox.appendChild(canvas);
+
+                   initChart();
+                   function initChart() {
+                     cMargin = 60;
+                     cSpace = 60;
+
+                     canvas.width = window.innerWidth;
+                     canvas.height = cBox.getAttribute("height");
+
+                     canvas.style.width = canvas.width
+                     canvas.style.height = canvas.height
+
+                     cHeight = canvas.height - cMargin * 2 - cSpace * 2;
+                     cWidth = canvas.width - cMargin * 2 - cSpace * 2;
+
+                     originX = canvas.width / 2;
+                     originY = cHeight + cSpace + cMargin;
+
+                     totalNumber = textArr.length;
+                     const allArr = dataArr[0].value;
+                     maxValue = Math.max.apply(null,allArr);
+                     colorArr = ["#2DC6C8","#B6A2DD","#5AB1EE","#FEB880","#D7797F"]
+
+                     ctr = 1;
+                     number = 40;
+                     speed = 2;
+
+                     textPadding = 20;
+                   }
+
+                   drawLegend();
+                   function drawLegend() {
+                      ctx.textAlign = "left";
+                      let posX = cMargin + cSpace * 3;
+                      let posY = cMargin;
+                      let tWidth = 30;
+                      let tHeight = 20;
+
+                      for (let i = 0; i < totalNumber; i++) {
+                        ctx.fillStyle = colorArr[i];
+                        ctx.fillRect(posX, posY, tWidth, tHeight);
+                        ctx.moveTo(posX, posY);
+                        ctx.font = "normal 24px 微软雅黑";
+                        ctx.fillStyle = colorArr[i];
+                        ctx.fillText(textArr[i], posX + tWidth + 10, posY + 17);
+
+                        posX += 150;
+                      }
+                   }
+
+                   let oldArr = dataArr[0].value;
+                   let nowArr = [];
+                   let nowTextArr = [];
+                   for(let i = 0; i < totalNumber; i++) {
+                      nowArr.push({value: oldArr[i], name: textArr[i]})
+                   }
+                   nowArr.sort(function(a,b){return a.value - b.value});
+                   let positionArr = [];
+
+                   let R = cWidth / 2;
+                   let blockMargin = 4;
+                   let lineMargin = 20;
+
+                   for (let i = 0; i < totalNumber; i++) {
+                     positionArr.push({
+                       x: originX,
+                       y1: originY - cHeight / totalNumber * i,
+                       y2: originY - cHeight / totalNumber * (i + 1) + blockMargin,
+                       r1: R * (nowArr[i - 1] ? nowArr[i - 1] : 0) / maxValue,
+                       r2: R * nowArr[i].value / maxValue - blockMargin
+                     })
+                   }
+
+                   drawChartAnimate();
+                   function drawChartAnimate(mouseMove) {
+                      let persent = ctr / number;
+                      let tipArr = null;
+
+                      for (let i = 0; i < totalNumber; i++) {
+                        ctx.lineWidth = 2;
+                        ctx.fillStyle = colorArr[i%colorArr.length];
+
+                        let positionObj = positionArr[i];
+
+                        ctx.beginPath();
+                        let y1 = positionObj.y1 - (positionObj.y1 - positionObj.y2) / 2 * (1 - persent)
+                        let y2 = positionObj.y2 + (positionObj.y1 - positionObj.y2) / 2 * (1 - persent);
+                        let r1 = positionObj.r1 * persent;
+                        let r2 = positionObj.r2 * persent;
+                        ctx.moveTo(positionObj.x - r1, y1);
+                        ctx.lineTo(positionObj.x + r1, y1);
+                        ctx.lineTo(positionObj.x + r2, y2);
+                        ctx.lineTo(positionObj.x - r2, y2);
+
+                        if (mouseMove && ctx.isPointInPath(mousePosition.x * 2, mousePosition.y * 2)) {
+                          ctx.globalAlpha = 0.8;
+                          tipArr = ["数据", nowArr[i].value, nowArr[i].name]
+                        }
+
+                        ctx.closePath();
+                        ctx.fill();
+                        ctx.globalAlpha = 1;
+
+                        if (tipArr && tipArr.length > 0) {
+                            drawTips(mousePosition.x * 2, mousePosition.y * 2, tipArr)
+                        }
+
+                        y1 = originY - cHeight / totalNumber * 1 * persent;
+                        y2 = originY - cHeight / totalNumber * (i + 1) * persent + blockMargin;
+                        r1 *= persent;
+                        r2 *= persent;
+
+                        ctx.beginPath();
+
+                        let LDx = positionObj.x - r1 - lineMargin;
+                        let Dy = y1;
+                        let RDx = positionObj.x + r1 + lineMargin;
+
+                        if (i === 0) {
+                          Dy += lineMargin;
+                          LDx = RDx = originX
+                        }
+                        ctx.moveTo(LDx, Dy);
+                        if (i === totalNumber - 1) {
+                          ctx.lineTo(positionObj.x - r2 - lineMargin - blockMargin - lineMargin / 2, y2 - blockMargin - lineMargin / 2);
+                          ctx.lineTo(positionObj.x + r2 + lineMargin + blockMargin + lineMargin / 2, y2 - blockMargin - lineMargin / 2);
+                          ctx.lineTo(RDx, Dy)
+                        }
+
+
+                      }
+
+                   }
+              }
+              function drawChart() {
+
+              }
+
+              function drawTips() {
+
+              }
+
+
+
+              window.onresize = function() {
+                console.log(window.innerWidth)
+                canvas.width = window.innerWidth
+
+
+
+              }
+          }
+       </script>
+    </body>
+</html>
